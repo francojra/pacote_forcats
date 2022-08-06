@@ -43,3 +43,41 @@ devtools::install_github("tidyverse/forcats")
 # Na aba do R clique em 'Help' > Cheat sheets > Browse Cheat sheets
 
 ### Após isso, busque o cheat sheet relacioando ao pacote forcats
+
+# Prática com o pacote ---------------------------------------------------------------------------------------------------------------------
+
+### O pacote forcats é parte do coração do tidyverse, então você pode
+### carregar o pacote através de
+
+library(tidyverse) 
+# ou 
+library(forcats)
+
+### Pacotes necessários
+
+library(forcats)
+library(dplyr)
+library(ggplot2)
+
+### Manipulação dos dados
+
+starwars %>% 
+  filter(!is.na(species)) %>% # Retirar os NAs da variável 'species'
+  count(species, sort = TRUE) # Ordenar os valores do maior para o menor
+
+starwars %>%
+  filter(!is.na(species)) %>%
+  mutate(species = fct_lump(species, n = 3)) %>%
+  count(species)
+
+### Gráficos
+
+ggplot(starwars, aes(x = eye_color)) + 
+  geom_bar() + 
+  coord_flip()
+
+starwars %>%
+  mutate(eye_color = fct_infreq(eye_color)) %>%
+  ggplot(aes(x = eye_color)) + 
+  geom_bar() + 
+  coord_flip()
